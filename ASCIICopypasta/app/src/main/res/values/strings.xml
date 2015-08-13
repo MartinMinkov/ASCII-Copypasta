@@ -1,7 +1,5 @@
 <resources>
     <string name="app_name">ASCII Copypasta</string>
-
-    <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="memes_title">Meme Title</string>
 </resources>
