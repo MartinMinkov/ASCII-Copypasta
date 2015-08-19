@@ -2,4 +2,6 @@
     <string name="app_name">ASCII Copypasta</string>
     <string name="search_category">Categories</string>
     <string name="memes_title">Meme Title</string>
+    <string name="twitch_memes">Twitch Memes</string>
+    <string name="summary_twitch_memes">Displays only memes found on twitch</string>
 </resources>
