@@ -4,26 +4,21 @@ import android.app.ListFragment;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceFragment;
-import android.view.ContextMenu;
+import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
-
 import java.util.ArrayList;
 
-/**
- * Created by root on 13/08/15.
- */
 public class MemeListFragment extends ListFragment{
     private static ArrayList<String> test = new ArrayList<>();
     private static final String TAG = "MemeListFragment On Click";
+    private String sort;
     ClipboardManager clipBoard;
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -85,5 +80,10 @@ public class MemeListFragment extends ListFragment{
         clipBoard.setPrimaryClip(clip);
 
         toast.show();
+    }
+    private boolean getSharedPreference() {
+        SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
+        String button = sharedPref.getString("button", null);
+        return sharedPref.getBoolean(button, false);
     }
 }

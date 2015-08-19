@@ -1,15 +1,19 @@
 package copy_pasta.admin.asciicopypasta;
 
 import android.app.FragmentManager;
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.os.Bundle;
+import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -60,11 +64,31 @@ public class MainActivity extends ActionBarActivity {
         inflater.inflate(R.menu.menu_main, menu);
 
     }
-    public static class SettingsFragment extends PreferenceFragment {
+    public static class SettingsFragment extends PreferenceFragment implements OnSharedPreferenceChangeListener{
         @Override
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             addPreferencesFromResource(R.xml.preferences);
+        }
+        @Override
+        public void onResume() {
+            super.onResume();
+            getPreferenceManager().getSharedPreferences().registerOnSharedPreferenceChangeListener(this);
+        }
+        @Override
+        public void onPause() {
+            super.onPause();
+            getPreferenceManager().getSharedPreferences().unregisterOnSharedPreferenceChangeListener(this);
+        }
+        @Override
+        public void onSharedPreferenceChanged (SharedPreferences sharedPreferences, String key) {
+            SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPref.edit();
+            if(sharedPreferences.getBoolean("twitch_memes", false)) {
+                editor.putBoolean("twitch_memes", sharedPreferences.getBoolean("twitch_memes", false));
+                editor.putString("button", "twitch_memes");
+            }
+            editor.commit();
         }
     }
 }
