@@ -105,7 +105,7 @@ public class MemeListFragment extends ListFragment{
         sort = sharedPref.getString("button", null);
         return sharedPref.getBoolean(sort, false);
     }
-
+    //Adds the correct memes to the correct lists.
     private void setList() {
         if(sort == null || categories == false) {
                 test.addAll(twitch);

@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.os.Bundle;
-import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
@@ -14,6 +13,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -22,12 +22,6 @@ public class MainActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        if(fragManager.findFragmentById(android.R.id.content) == null) {
-            MemeListFragment memeFragment = new MemeListFragment();
-            fragManager.beginTransaction().
-                    add(android.R.id.content, memeFragment).commit();
-
-        }
     }
     @Override
     public void onBackPressed() {
@@ -46,12 +40,25 @@ public class MainActivity extends ActionBarActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId()) {
+            //Goes to the categories fragment
             case R.id.categories:
                 categoryMenu();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+    public void switchToMemeList(View view) {
+        if(fragManager.findFragmentById(android.R.id.content) == null) {
+            //Hides the activity buttons when changing to the fragment
+            Button favorite = (Button) findViewById(R.id.favorite);
+            Button allMemes = (Button) findViewById(R.id.allMemes);
+            allMemes.setVisibility(View.INVISIBLE);
+            favorite.setVisibility(View.INVISIBLE);
+            MemeListFragment memeFragment = new MemeListFragment();
+            fragManager.beginTransaction().addToBackStack(null).
+            replace(android.R.id.content, memeFragment).commit();
+         }
     }
     public void categoryMenu() {
             SettingsFragment settingsFragment = new SettingsFragment();
