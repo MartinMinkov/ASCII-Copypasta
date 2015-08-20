@@ -12,7 +12,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 import java.util.ArrayList;
 
@@ -30,11 +32,10 @@ public class MemeListFragment extends ListFragment{
     View V;
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
              clipBoard = (ClipboardManager) getActivity().
                     getSystemService(getActivity().getApplicationContext().CLIPBOARD_SERVICE);
-            ArrayAdapter<String> adapter = new ArrayAdapter<>(inflater
-                    .getContext(),
-                    android.R.layout.simple_list_item_1, test);
+            MemeAdapter adapter = new MemeAdapter(test);
             setListAdapter(adapter);
             V = new View(getActivity());
             return super.onCreateView(inflater, container, savedInstanceState);
@@ -119,6 +120,27 @@ public class MemeListFragment extends ListFragment{
                     test.addAll(reddit);
                     break;
             }
+        }
+    }
+    private class MemeAdapter extends ArrayAdapter<String> {
+        public MemeAdapter(ArrayList<String> memes) {
+            super(getActivity(), 0, memes);
+        }
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            // If we weren't given a view, inflate one
+            if (convertView == null) {
+                convertView = getActivity().getLayoutInflater()
+                        .inflate(R.layout.listfragment_main, null);
+            }
+            // Configure the view for this Crime
+            String c = getItem(position);
+            ImageView favoriteIcon = (ImageView)convertView.findViewById(R.id.row_icon);
+            favoriteIcon.setBackgroundResource(R.drawable.favorite_icon);
+            TextView titleTextView =
+                    (TextView)convertView.findViewById(R.id.row_title);
+            titleTextView.setText(c);
+            return convertView;
         }
     }
 }
