@@ -84,10 +84,8 @@ public class MainActivity extends ActionBarActivity {
         public void onSharedPreferenceChanged (SharedPreferences sharedPreferences, String key) {
             SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPref.edit();
-            if(sharedPreferences.getBoolean("twitch_memes", false)) {
                 editor.putBoolean("twitch_memes", sharedPreferences.getBoolean("twitch_memes", false));
                 editor.putString("button", "twitch_memes");
-            }
             editor.commit();
         }
     }
