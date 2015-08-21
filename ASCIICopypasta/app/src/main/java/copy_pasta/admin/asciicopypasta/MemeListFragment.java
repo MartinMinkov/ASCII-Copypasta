@@ -101,17 +101,22 @@ public class MemeListFragment extends ListFragment{
 
         toast.show();
     }
+    /*Gets the shared preferences from MainAcitivity and stores them into values */
     private boolean getSharedPreference() {
-        SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences sharedPref = getActivity().getSharedPreferences
+                (getString(R.string.categories_settings), Context.MODE_PRIVATE);
         sort = sharedPref.getString("button", null);
         return sharedPref.getBoolean(sort, false);
     }
-    //Adds the correct memes to the correct lists.
+    /*Sets the lists based on which button has been set to filter, or if no button is active it
+     * defaults to adding all memes to the main list. */
     private void setList() {
+        //Check for if it is the first time opening the app or the button was set to false
         if(sort == null || categories == false) {
                 test.addAll(twitch);
                 test.addAll(reddit);
         } else {
+            //Which memes to add to the main list.
             switch (sort) {
                 case "twitch_memes":
                     test.addAll(twitch);
