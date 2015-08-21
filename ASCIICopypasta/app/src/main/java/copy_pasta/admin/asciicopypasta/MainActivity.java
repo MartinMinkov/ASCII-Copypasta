@@ -28,11 +28,4 @@ public class MainActivity extends ActionBarActivity {
         Intent intent = new Intent(this, MemeListActivity.class);
         startActivity(intent);
     }
-    @Override
-    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-        super.onCreateContextMenu(menu, v, menuInfo);
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_main, menu);
-
-    }
 }

@@ -24,7 +24,7 @@ public class MemeListActivity extends ActionBarActivity {
         setContentView(R.layout.main);
         if(fragManager.findFragmentById(android.R.id.content) == null) {
             MemeListFragment memeFragment = new MemeListFragment();
-            fragManager.beginTransaction().addToBackStack(null).
+            fragManager.beginTransaction().
                     replace(android.R.id.content, memeFragment).commit();
         }
     }
