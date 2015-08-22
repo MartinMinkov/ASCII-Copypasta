@@ -4,6 +4,7 @@ import android.app.ListFragment;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -12,14 +13,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 import java.util.ArrayList;
+import java.util.PriorityQueue;
 
 /**
- * Created by root on 13/08/15.
+ * Created by Martin on 13/08/15.
  */
 public class MemeListFragment extends ListFragment{
     private static ArrayList<String> test = new ArrayList<>();
@@ -42,33 +46,39 @@ public class MemeListFragment extends ListFragment{
         }
         private void addMemes() {
             twitch.add("( ͡° ͜ʖ ͡°)┌∩┐");
+            twitch.add("(ಠ_ಠ)┌∩┐");
+            twitch.add("Table Flip (╯°□°）╯︵ ┻━┻");
             twitch.add("(º‿º✿) PEACEFUL PROTEST (º‿º✿)");
-            twitch.add("ヽ(ຈل͜ຈ)ﾉ ( ºل͟º ) ୧༼ ͡◉ل͜ ͡◉༽୨ (ง ͠° ل͜ °)ง ヽ(ຈل͜ຈ)ﾉ\n ( " +
-                    "ºل͟º ) ୧༼ ͡◉ل͜ ͡◉༽୨ (ง ͠° ل͜ °)ง ヽ(ຈل͜ຈ)ﾉ ( ºل͟º ) ୧༼ ͡◉ل͜ ͡◉༽୨ \n" +
+            reddit.add("(ಠ_ಠ)");
+            twitch.add("( ͡° ͜ʖ ͡°)");
+            twitch.add("ヽ(ຈل͜ຈ)ﾉ ( ºل͟º ) ୧༼ ͡◉ل͜ ͡◉༽୨ (ง ͠° ل͜ °)ง ヽ(ຈل͜ຈ)ﾉ\n" +
                     "(ง ͠° ل͜ °)ง \n Sorry, I dropped my bag of Dongers. \n ヽ(ຈل͜ຈ)ﾉ ( ºل͟º )\n " +
-                    "୧༼ ͡◉ل͜ ͡◉༽୨ (ง ͠° ل͜ °)ง ヽ(ຈل͜ຈ)ﾉ ( ºل͟º ) ୧༼ ͡◉ل͜ ͡◉༽୨ (ง ͠° ل͜ °)ง\n" +
                     " ヽ(ຈل͜ຈ)ﾉ ( ºل͟º ) ୧༼ ͡◉ل͜ ͡◉༽୨ (ง ͠° ل͜ °)ง");
             reddit.add("---------------------------\n" +
                     "\n" +
-                    "┈┈┈┈╱▏┈┈┈┈┈╱▔▔▔▔╲┈┈┈┈┈\n" +
-                    "┈┈┈┈▏▏┈┈┈┈┈▏╲▕▋▕▋▏┈┈┈┈\n" +
-                    "┈┈┈┈╲╲┈┈┈┈┈▏┈▏┈▔▔▔▆┈┈┈\n" +
-                    "┈┈┈┈┈╲▔▔▔▔▔╲╱┈╰┳┳┳╯┈┈┈\n" +
-                    "┈┈╱╲╱╲▏┈┈┈┈┈┈▕▔╰━╯┈┈┈┈\n" +
-                    "┈┈▔╲╲╱╱▔╱▔▔╲╲╲╲┈┈┈┈┈┈┈\n" +
-                    "┈┈┈┈╲╱╲╱┈┈┈┈╲╲▂╲▂┈┈┈┈┈\n" +
-                    "┈┈┈┈┈┈┈┈┈┈┈┈┈╲╱╲╱┈┈┈┈┈");
+                    "┈┈┈┈╱▏┈┈┈┈┈╱▔▔▔▔╲\n" +
+                    "┈┈┈┈▏▏┈┈┈┈┈▏╲▕▋▕▋▏\n" +
+                    "┈┈┈┈╲╲┈┈┈┈┈▏┈▏┈▔▔▔▆\n" +
+                    "┈┈┈┈┈╲▔▔▔▔▔╲╱┈╰┳┳┳╯\n" +
+                    "┈┈╱╲╱╲▏┈┈┈┈┈┈▕▔╰━╯\n" +
+                    "┈┈▔╲╲╱╱▔╱▔▔╲╲╲╲\n" +
+                    "┈┈┈┈╲╱╲╱┈┈┈┈╲╲▂╲▂\n" +
+                    "┈┈┈┈┈┈┈┈┈┈┈┈┈╲╱╲╱");
             reddit.add("░░░░░░░░░░░░ \n" +
-                    "░░░░░░░░░░░░▄▀▀▀▀▄░░░ \n" +
-                    "░░░░░░░░░░▄▀░░▄░▄░█░░ \n" +
-                    "░▄▄░░░░░▄▀░░░░▄▄▄▄█░░ \n" +
-                    "█░░▀▄░▄▀░░░░░░░░░░█░░ \n" +
-                    "░▀▄░░▀▄░░░░█░░░░░░█░░ \n" +
-                    "░░░▀▄░░▀░░░█░░░░░░█░░ \n" +
-                    "░░░▄▀░░░░░░█░░░░▄▀░░░ \n" +
-                    "░░░▀▄▀▄▄▀░░█▀░▄▀░░░░░ \n" +
-                    "░░░░░░░░█▀▀█▀▀░░░░░░░ \n" +
-                    "░░░░░░░░▀▀░▀▀░░░░░░░░");
+                    "░░░░░░░░░░░░▄▀▀▀▀▄\n" +
+                    "░░░░░░░░░░▄▀░░▄░▄░█\n" +
+                    "░▄▄░░░░░▄▀░░░░▄▄▄▄█\n" +
+                    "█░░▀▄░▄▀░░░░░░░░░░█\n" +
+                    "░▀▄░░▀▄░░░░█░░░░░░█\n" +
+                    "░░░▀▄░░▀░░░█░░░░░░█\n" +
+                    "░░░▄▀░░░░░░█░░░░▄▀\n" +
+                    "░░░▀▄▀▄▄▀░░█▀░▄▀\n" +
+                    "░░░░░░░░█▀▀█▀▀\n" +
+                    "░░░░░░░░▀▀░▀▀");
+            reddit.add("◑ ◑\n" +
+                    "╔═╗\n" +
+                    "║▓▒░░░░░░░░░\n" +
+                    "╚═╝");
         }
         @Override
         public void onPause() {
@@ -127,6 +137,10 @@ public class MemeListFragment extends ListFragment{
             }
         }
     }
+
+    /*
+    Custom adapter class that represents each row in the ListFragment. Row consits of text and a button.
+     */
     private class MemeAdapter extends ArrayAdapter<String> {
         public MemeAdapter(ArrayList<String> memes) {
             super(getActivity(), 0, memes);
@@ -138,10 +152,20 @@ public class MemeListFragment extends ListFragment{
                 convertView = getActivity().getLayoutInflater()
                         .inflate(R.layout.listfragment_main, null);
             }
-            // Configure the view for this Crime
             String c = getItem(position);
-            ImageView favoriteIcon = (ImageView)convertView.findViewById(R.id.row_icon);
-            favoriteIcon.setBackgroundResource(R.drawable.favorite_icon);
+            ImageButton imageButton = (ImageButton) convertView.findViewById(R.id.row_icon);
+            imageButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    v.setSelected(!v.isSelected());
+                if (v.isSelected()) {
+                    v.setBackgroundResource(R.drawable.favorite_icon);
+                } else {
+                    v.setBackgroundResource(R.drawable.unfavorite_icon);
+                }
+
+                }});
+
             TextView titleTextView =
                     (TextView)convertView.findViewById(R.id.row_title);
             titleTextView.setText(c);
