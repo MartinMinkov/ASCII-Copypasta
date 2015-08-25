@@ -24,8 +24,7 @@ public class MemeListActivity extends ActionBarActivity {
         setContentView(R.layout.main);
         if(fragManager.findFragmentById(android.R.id.content) == null) {
             MemeListFragment memeFragment = new MemeListFragment();
-            fragManager.beginTransaction().
-                    replace(android.R.id.content, memeFragment).commit();
+            fragManager.beginTransaction().replace(android.R.id.content, memeFragment).commit();
         }
     }
     @Override
@@ -48,7 +47,10 @@ public class MemeListActivity extends ActionBarActivity {
     /*Setting the fragment for the categories menu */
     public void categoryMenu() {
         SettingsFragment settingsFragment = new SettingsFragment();
-        fragManager.beginTransaction().addToBackStack(null).replace(android.R.id.content,
+        fragManager.beginTransaction().addToBackStack(null).setCustomAnimations(R.animator.slide_in_top_right,
+                R.animator.slide_out_bottom_left,
+                R.animator.slide_in_top_right,
+                R.animator.slide_out_bottom_left).replace(android.R.id.content,
                 settingsFragment).commit();
     }
     /*Allows going back to the previous screen */

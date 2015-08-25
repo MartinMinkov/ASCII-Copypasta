@@ -17,8 +17,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".MemeListActivity">
-
         </activity>
+        <activity android:name=".FavoritesActivity"></activity>
     </application>
 
 </manifest>

@@ -10,7 +10,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/favorite_memes"
-        android:layout_centerInParent="true"/>
+        android:layout_centerInParent="true"
+        android:onClick="switchToFavoritesList"/>
     <Button
         android:id="@+id/allMemes"
         android:layout_width="match_parent"

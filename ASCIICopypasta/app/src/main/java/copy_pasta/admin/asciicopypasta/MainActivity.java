@@ -27,5 +27,10 @@ public class MainActivity extends ActionBarActivity {
     public void switchToMemeList(View view) {
         Intent intent = new Intent(this, MemeListActivity.class);
         startActivity(intent);
+        overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
+    }
+    public void switchToFavoritesList(View view) {
+        Intent intent = new Intent(this, FavoritesActivity.class);
+        startActivity(intent);
     }
 }
