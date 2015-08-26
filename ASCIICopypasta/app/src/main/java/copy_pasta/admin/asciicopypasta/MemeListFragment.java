@@ -20,12 +20,16 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.PriorityQueue;
 
 /**
  * Created by Martin on 13/08/15.
  */
 public class MemeListFragment extends ListFragment{
+    private SharedPreferences sharedPref;
+    private SharedPreferences.Editor editor;
+    private HashSet<String> favorites = new HashSet<>();
     private static ArrayList<Meme> memeList = new ArrayList<>();
     private ArrayList<String> memeStrings = new ArrayList<>();
     private static final String TAG = "MemeListFragment On Click";
@@ -37,6 +41,12 @@ public class MemeListFragment extends ListFragment{
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
              clipBoard = (ClipboardManager) getActivity().
                     getSystemService(getActivity().getApplicationContext().CLIPBOARD_SERVICE);
+            sharedPref = getActivity().getSharedPreferences(getString(R.string.favorite_memes),
+                    Context.MODE_PRIVATE);
+            editor = sharedPref.edit();
+            if(sharedPref != null) {
+                favorites = new HashSet<>(sharedPref.getStringSet("FavoritesSet", null));
+            }
             MemeAdapter adapter = new MemeAdapter(memeStrings);
             setListAdapter(adapter);
             V = new View(getActivity());
@@ -83,6 +93,8 @@ public class MemeListFragment extends ListFragment{
             super.onPause();
             memeStrings.clear();
             memeList.clear();
+            editor.putStringSet("FavoritesSet", favorites);
+            editor.commit();
         }
         @Override
         public void onResume() {
@@ -158,22 +170,31 @@ public class MemeListFragment extends ListFragment{
             super(getActivity(), 0, memes);
         }
         @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
+        public View getView(final int position, View convertView, ViewGroup parent) {
             // If we weren't given a view, inflate one
             if (convertView == null) {
                 convertView = getActivity().getLayoutInflater()
                         .inflate(R.layout.listfragment_main, null);
             }
             String c = getItem(position);
-            ImageButton imageButton = (ImageButton) convertView.findViewById(R.id.row_icon);
+            ImageButton imageButton;
+            imageButton = (ImageButton) convertView.findViewById(R.id.row_icon);
+            if(favorites.contains(c)) {
+                imageButton.setBackgroundResource(R.drawable.favorite_icon);
+                imageButton.setSelected(true);
+            } else {
+                imageButton.setBackgroundResource(R.drawable.unfavorite_icon);
+            }
             imageButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     v.setSelected(!v.isSelected());
                     if (v.isSelected()) {
                         v.setBackgroundResource(R.drawable.favorite_icon);
+                        favorites.add(memeStrings.get(position));
                     } else {
                         v.setBackgroundResource(R.drawable.unfavorite_icon);
+                        favorites.remove(memeStrings.get(position));
                     }
 
                 }
