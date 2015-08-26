@@ -2,7 +2,6 @@ package copy_pasta.admin.asciicopypasta;
 
 import android.app.FragmentManager;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceFragment;
@@ -47,10 +46,10 @@ public class MemeListActivity extends ActionBarActivity {
     /*Setting the fragment for the categories menu */
     public void categoryMenu() {
         SettingsFragment settingsFragment = new SettingsFragment();
-        fragManager.beginTransaction().addToBackStack(null).setCustomAnimations(R.animator.slide_in_top_right,
-                R.animator.slide_out_bottom_left,
-                R.animator.slide_in_top_right,
-                R.animator.slide_out_bottom_left).replace(android.R.id.content,
+        fragManager.beginTransaction().addToBackStack(null).setCustomAnimations(R.animator.slide_in_top,
+                R.animator.slide_out_bottom,
+                R.animator.slide_in_bottom,
+                R.animator.slide_out_top).replace(android.R.id.content,
                 settingsFragment).commit();
     }
     /*Allows going back to the previous screen */
@@ -60,6 +59,7 @@ public class MemeListActivity extends ActionBarActivity {
             fragManager.popBackStack();
         } else {
             super.onBackPressed();
+            overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
         }
     }
     @Override

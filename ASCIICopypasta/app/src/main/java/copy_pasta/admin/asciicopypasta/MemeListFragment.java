@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -171,6 +172,7 @@ public class MemeListFragment extends ListFragment{
         }
         @Override
         public View getView(final int position, View convertView, ViewGroup parent) {
+
             // If we weren't given a view, inflate one
             if (convertView == null) {
                 convertView = getActivity().getLayoutInflater()
@@ -179,11 +181,10 @@ public class MemeListFragment extends ListFragment{
             String c = getItem(position);
             ImageButton imageButton;
             imageButton = (ImageButton) convertView.findViewById(R.id.row_icon);
+            //If the meme is in the favorites list set the default imageButton to be favorited
             if(favorites.contains(c)) {
                 imageButton.setBackgroundResource(R.drawable.favorite_icon);
                 imageButton.setSelected(true);
-            } else {
-                imageButton.setBackgroundResource(R.drawable.unfavorite_icon);
             }
             imageButton.setOnClickListener(new View.OnClickListener() {
                 @Override
