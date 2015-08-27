@@ -6,4 +6,11 @@
         android:summary="@string/summary_twitch_memes"
         android:defaultValue="false"
         />
+    <CheckBoxPreference
+        android:key="reddit_memes"
+        android:title="@string/reddit_memes"
+        android:summary="@string/summary_reddit_memes"
+        android:defaultValue="false"
+        />
+
 </PreferenceScreen>

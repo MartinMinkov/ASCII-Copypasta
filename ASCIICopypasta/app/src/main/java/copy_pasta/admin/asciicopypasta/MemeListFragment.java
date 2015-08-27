@@ -40,6 +40,7 @@ public class MemeListFragment extends ListFragment{
     View V;
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+            setHasOptionsMenu(true);
              clipBoard = (ClipboardManager) getActivity().
                     getSystemService(getActivity().getApplicationContext().CLIPBOARD_SERVICE);
             sharedPref = getActivity().getSharedPreferences(getString(R.string.favorite_memes),
@@ -88,6 +89,7 @@ public class MemeListFragment extends ListFragment{
                     "╔═╗\n" +
                     "║▓▒░░░░░░░░░\n" +
                     "╚═╝", "reddit_memes", false));
+            memeList.add(new Meme("Yᴏᴜ ɢᴜʏs ᴀʀᴇ ʀᴜɪɴɪɴɢ ᴍʏ ᴛᴡɪᴛᴄʜ ᴄʜᴀᴛ ᴇxᴘᴇʀɪᴇɴᴄᴇ. I ᴄᴏᴍᴇ ᴛᴏ ᴛʜᴇ ᴛᴡɪᴛᴄʜ ᴄʜᴀᴛ ғᴏʀ ᴍᴀᴛᴜʀᴇ ᴄᴏɴᴠᴇʀsᴀᴛɪᴏɴ ᴀʙᴏᴜᴛ ᴛʜᴇ ɢᴀᴍᴇᴘʟᴀʏ, ᴏɴʟʏ ᴛᴏ ʙᴇ ᴀᴡᴀʀᴅᴇᴅ ᴡɪᴛʜ ᴋᴀᴘᴘᴀ ғᴀᴄᴇs ᴀɴᴅ ғʀᴀɴᴋᴇʀᴢs. Pᴇᴏᴘʟᴇ ᴡʜᴏ sᴘᴀᴍ sᴀɪᴅ ғᴀᴄᴇs ɴᴇᴇᴅ ᴍᴇᴅɪᴄᴀʟ ᴀᴛᴛᴇɴᴛɪᴏɴ ᴜᴛᴍᴏsᴛ. Tʜᴇ ᴛᴡɪᴛᴄʜ ᴄʜᴀᴛ ɪs sᴇʀɪᴏᴜs ʙᴜsɪɴᴇss, ᴀɴᴅ ᴛʜᴇ ᴍᴏᴅs sʜᴏᴜʟᴅ ʀᴇᴀʟʟʏ ʀᴀɪsᴇ ᴛʜᴇɪʀ ᴅᴏɴɢᴇʀs\n", "twitch_memes", false));
         }
         @Override
         public void onPause() {
@@ -191,6 +193,7 @@ public class MemeListFragment extends ListFragment{
                 public void onClick(View v) {
                     v.setSelected(!v.isSelected());
                     if (v.isSelected()) {
+
                         v.setBackgroundResource(R.drawable.favorite_icon);
                         favorites.add(memeStrings.get(position));
                     } else {
