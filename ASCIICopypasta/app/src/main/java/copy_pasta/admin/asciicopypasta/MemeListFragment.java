@@ -48,6 +48,9 @@ public class MemeListFragment extends ListFragment{
             editor = sharedPref.edit();
             if(sharedPref != null) {
                 favorites = new HashSet<>(sharedPref.getStringSet("FavoritesSet", null));
+                if (sharedPref.getStringSet("FavoritesSet", null) != null) {
+                    favorites = new HashSet<>(sharedPref.getStringSet("FavoritesSet", null));
+                }
             }
             MemeAdapter adapter = new MemeAdapter(memeStrings);
             setListAdapter(adapter);
@@ -91,15 +94,22 @@ public class MemeListFragment extends ListFragment{
                     "╚═╝", "reddit_memes", false));
             memeList.add(new Meme("Yᴏᴜ ɢᴜʏs ᴀʀᴇ ʀᴜɪɴɪɴɢ ᴍʏ ᴛᴡɪᴛᴄʜ ᴄʜᴀᴛ ᴇxᴘᴇʀɪᴇɴᴄᴇ. I ᴄᴏᴍᴇ ᴛᴏ ᴛʜᴇ ᴛᴡɪᴛᴄʜ ᴄʜᴀᴛ ғᴏʀ ᴍᴀᴛᴜʀᴇ ᴄᴏɴᴠᴇʀsᴀᴛɪᴏɴ ᴀʙᴏᴜᴛ ᴛʜᴇ ɢᴀᴍᴇᴘʟᴀʏ, ᴏɴʟʏ ᴛᴏ ʙᴇ ᴀᴡᴀʀᴅᴇᴅ ᴡɪᴛʜ ᴋᴀᴘᴘᴀ ғᴀᴄᴇs ᴀɴᴅ ғʀᴀɴᴋᴇʀᴢs. Pᴇᴏᴘʟᴇ ᴡʜᴏ sᴘᴀᴍ sᴀɪᴅ ғᴀᴄᴇs ɴᴇᴇᴅ ᴍᴇᴅɪᴄᴀʟ ᴀᴛᴛᴇɴᴛɪᴏɴ ᴜᴛᴍᴏsᴛ. Tʜᴇ ᴛᴡɪᴛᴄʜ ᴄʜᴀᴛ ɪs sᴇʀɪᴏᴜs ʙᴜsɪɴᴇss, ᴀɴᴅ ᴛʜᴇ ᴍᴏᴅs sʜᴏᴜʟᴅ ʀᴇᴀʟʟʏ ʀᴀɪsᴇ ᴛʜᴇɪʀ ᴅᴏɴɢᴇʀs\n", "twitch_memes", false));
         }
-        @Override
+
+    @Override
         public void onPause() {
             super.onPause();
             memeStrings.clear();
+<<<<<<< HEAD
             memeList.clear();
             editor.putStringSet("FavoritesSet", favorites);
+=======
+        memeList.clear();
+        editor.putStringSet("FavoritesSet", favorites);
+>>>>>>> ea76652f5af5cecd01ce840eb9bfba5be6dfa293
             editor.commit();
         }
-        @Override
+
+    @Override
         public void onResume() {
             super.onResume();
             categories = getSharedPreference();
@@ -117,6 +127,7 @@ public class MemeListFragment extends ListFragment{
         //Set up the ClipBoard object to copy the meme to the clipboard.
         ClipData clip = ClipData.newPlainText(TAG, memeStrings.get(position));
         clipBoard.setPrimaryClip(clip);
+
         V.setBackgroundResource(0);
         v.setBackgroundResource(R.color.button_material_light);
         V = v;
@@ -180,6 +191,7 @@ public class MemeListFragment extends ListFragment{
                 convertView = getActivity().getLayoutInflater()
                         .inflate(R.layout.listfragment_main, null);
             }
+
             String c = getItem(position);
             ImageButton imageButton;
             imageButton = (ImageButton) convertView.findViewById(R.id.row_icon);
@@ -191,14 +203,29 @@ public class MemeListFragment extends ListFragment{
             imageButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    //Set up a Toast message when an element is favorited
+                    Context context = getActivity().getApplicationContext();
+                    CharSequence favToastText = "Favorited this meme";
+                    CharSequence unfavToastText = "Unfavorited this meme";
+                    int duration = Toast.LENGTH_SHORT;
                     v.setSelected(!v.isSelected());
                     if (v.isSelected()) {
 
                         v.setBackgroundResource(R.drawable.favorite_icon);
                         favorites.add(memeStrings.get(position));
+<<<<<<< HEAD
                     } else {
                         v.setBackgroundResource(R.drawable.unfavorite_icon);
                         favorites.remove(memeStrings.get(position));
+=======
+                        Toast toast = Toast.makeText(context, favToastText, duration);
+                        toast.show();
+                    } else {
+                        v.setBackgroundResource(R.drawable.unfavorite_icon);
+                        favorites.remove(memeStrings.get(position));
+                        Toast toast = Toast.makeText(context, unfavToastText, duration);
+                        toast.show();
+>>>>>>> ea76652f5af5cecd01ce840eb9bfba5be6dfa293
                     }
 
                 }
