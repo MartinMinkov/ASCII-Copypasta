@@ -4,6 +4,7 @@ import android.app.FragmentManager;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.CheckBoxPreference;
 import android.preference.PreferenceFragment;
 import android.support.v7.app.ActionBarActivity;
 import android.view.ContextMenu;
@@ -88,6 +89,7 @@ public class MemeListActivity extends ActionBarActivity {
         }
         @Override
         public void onSharedPreferenceChanged (SharedPreferences sharedPreferences, String key) {
+            //TODO set buttons to only have 1 active at a time
             SharedPreferences sharedPref = getActivity().getSharedPreferences
                     (getString(R.string.categories_settings), Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPref.edit();
