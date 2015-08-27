@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -20,15 +21,18 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.PriorityQueue;
 
 /**
  * Created by Martin on 13/08/15.
  */
 public class MemeListFragment extends ListFragment{
-    private static ArrayList<String> test = new ArrayList<>();
-    private static ArrayList<String> twitch = new ArrayList<>();
-    private static ArrayList<String> reddit = new ArrayList<>();
+    private SharedPreferences sharedPref;
+    private SharedPreferences.Editor editor;
+    private HashSet<String> favorites = new HashSet<>();
+    private static ArrayList<Meme> memeList = new ArrayList<>();
+    private ArrayList<String> memeStrings = new ArrayList<>();
     private static final String TAG = "MemeListFragment On Click";
     private String sort;
     private Boolean categories;
@@ -36,25 +40,24 @@ public class MemeListFragment extends ListFragment{
     View V;
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
              clipBoard = (ClipboardManager) getActivity().
                     getSystemService(getActivity().getApplicationContext().CLIPBOARD_SERVICE);
-            MemeAdapter adapter = new MemeAdapter(test);
+            sharedPref = getActivity().getSharedPreferences(getString(R.string.favorite_memes),
+                    Context.MODE_PRIVATE);
+            editor = sharedPref.edit();
+            if(sharedPref != null) {
+                if (sharedPref.getStringSet("FavoritesSet", null) != null) {
+                    favorites = new HashSet<>(sharedPref.getStringSet("FavoritesSet", null));
+                }
+            }
+            MemeAdapter adapter = new MemeAdapter(memeStrings);
             setListAdapter(adapter);
             V = new View(getActivity());
             return super.onCreateView(inflater, container, savedInstanceState);
         }
         private void addMemes() {
-            twitch.add("( ͡° ͜ʖ ͡°)┌∩┐");
-            twitch.add("(ಠ_ಠ)┌∩┐");
-            twitch.add("Table Flip (╯°□°）╯︵ ┻━┻");
-            twitch.add("(º‿º✿) PEACEFUL PROTEST (º‿º✿)");
-            reddit.add("(ಠ_ಠ)");
-            twitch.add("( ͡° ͜ʖ ͡°)");
-            twitch.add("ヽ(ຈل͜ຈ)ﾉ ( ºل͟º ) ୧༼ ͡◉ل͜ ͡◉༽୨ (ง ͠° ل͜ °)ง ヽ(ຈل͜ຈ)ﾉ\n" +
-                    "(ง ͠° ل͜ °)ง \n Sorry, I dropped my bag of Dongers. \n ヽ(ຈل͜ຈ)ﾉ ( ºل͟º )\n " +
-                    " ヽ(ຈل͜ຈ)ﾉ ( ºل͟º ) ୧༼ ͡◉ل͜ ͡◉༽୨ (ง ͠° ل͜ °)ง");
-            reddit.add("---------------------------\n" +
+            memeList.add(new Meme("( ͡° ͜ʖ ͡°)┌∩┐", "twitch_memes", false));
+            memeList.add(new Meme("---------------------------\n" +
                     "\n" +
                     "┈┈┈┈╱▏┈┈┈┈┈╱▔▔▔▔╲\n" +
                     "┈┈┈┈▏▏┈┈┈┈┈▏╲▕▋▕▋▏\n" +
@@ -63,8 +66,16 @@ public class MemeListFragment extends ListFragment{
                     "┈┈╱╲╱╲▏┈┈┈┈┈┈▕▔╰━╯\n" +
                     "┈┈▔╲╲╱╱▔╱▔▔╲╲╲╲\n" +
                     "┈┈┈┈╲╱╲╱┈┈┈┈╲╲▂╲▂\n" +
-                    "┈┈┈┈┈┈┈┈┈┈┈┈┈╲╱╲╱");
-            reddit.add("░░░░░░░░░░░░ \n" +
+                    "┈┈┈┈┈┈┈┈┈┈┈┈┈╲╱╲╱", "reddit_memes", false));
+            memeList.add(new Meme("(ಠ_ಠ)┌∩┐", "twitch_memes", false));
+            memeList.add(new Meme("Table Flip (╯°□°）╯︵ ┻━┻", "twitch_memes", false));
+            memeList.add(new Meme("(º‿º✿) PEACEFUL PROTEST (º‿º✿)", "twitch_memes", false));
+            memeList.add(new Meme("(ಠ_ಠ)", "twitch_memes", false));
+            memeList.add(new Meme("( ͡° ͜ʖ ͡°)", "twitch_memes", false));
+            memeList.add(new Meme("ヽ(ຈل͜ຈ)ﾉ ( ºل͟º ) ୧༼ ͡◉ل͜ ͡◉༽୨ (ง ͠° ل͜ °)ง ヽ(ຈل͜ຈ)ﾉ\n" +
+                    "(ง ͠° ل͜ °)ง \n Sorry, I dropped my bag of Dongers. \n ヽ(ຈل͜ຈ)ﾉ ( ºل͟º )\n" +
+                    "ヽ(ຈل͜ຈ)ﾉ ( ºل͟º ) ୧༼ ͡◉ل͜ ͡◉༽୨ (ง ͠° ل͜ °)ง", "twitch_memes", false));
+            memeList.add(new Meme("░░░░░░░░░░░░ \n" +
                     "░░░░░░░░░░░░▄▀▀▀▀▄\n" +
                     "░░░░░░░░░░▄▀░░▄░▄░█\n" +
                     "░▄▄░░░░░▄▀░░░░▄▄▄▄█\n" +
@@ -74,20 +85,23 @@ public class MemeListFragment extends ListFragment{
                     "░░░▄▀░░░░░░█░░░░▄▀\n" +
                     "░░░▀▄▀▄▄▀░░█▀░▄▀\n" +
                     "░░░░░░░░█▀▀█▀▀\n" +
-                    "░░░░░░░░▀▀░▀▀");
-            reddit.add("◑ ◑\n" +
+                    "░░░░░░░░▀▀░▀▀", "reddit_memes", false));
+            memeList.add(new Meme("◑ ◑\n" +
                     "╔═╗\n" +
                     "║▓▒░░░░░░░░░\n" +
-                    "╚═╝");
+                    "╚═╝", "reddit_memes", false));
         }
-        @Override
+
+    @Override
         public void onPause() {
             super.onPause();
-            test.clear();
-            twitch.clear();
-            reddit.clear();
+            memeStrings.clear();
+        memeList.clear();
+        editor.putStringSet("FavoritesSet", favorites);
+            editor.commit();
         }
-        @Override
+
+    @Override
         public void onResume() {
             super.onResume();
             categories = getSharedPreference();
@@ -103,8 +117,9 @@ public class MemeListFragment extends ListFragment{
         Toast toast = Toast.makeText(context, toastText, duration);
 
         //Set up the ClipBoard object to copy the meme to the clipboard.
-        ClipData clip = ClipData.newPlainText(TAG, test.get(position));
+        ClipData clip = ClipData.newPlainText(TAG, memeStrings.get(position));
         clipBoard.setPrimaryClip(clip);
+
         V.setBackgroundResource(0);
         v.setBackgroundResource(R.color.button_material_light);
         V = v;
@@ -123,17 +138,32 @@ public class MemeListFragment extends ListFragment{
     private void setList() {
         //Check for if it is the first time opening the app or the button was set to false
         if(sort == null || categories == false) {
-                test.addAll(twitch);
-                test.addAll(reddit);
+            initMemeString("none");
         } else {
             //Which memes to add to the main list.
             switch (sort) {
                 case "twitch_memes":
-                    test.addAll(twitch);
+                    initMemeString("twitch_memes");
                     break;
                 case "reddit_memes":
-                    test.addAll(reddit);
+                    initMemeString("reddit_memes");
                     break;
+            }
+        }
+    }
+    /*Initializes the memeString arraylist to hold the proper memes. This is dependant on which
+    category the user is searching for, by default ("none" category) it adds all memes to the list*/
+    private void initMemeString(String category) {
+        if(category.equals("none")) {
+            for(Meme m: memeList) {
+                memeStrings.add(m.getMeme());
+            }
+        } else {
+            for(Meme m: memeList) {
+                if(m.getCategory().equals(category)) {
+                    memeStrings.add(m.getMeme());
+
+                }
             }
         }
     }
@@ -146,25 +176,45 @@ public class MemeListFragment extends ListFragment{
             super(getActivity(), 0, memes);
         }
         @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
+        public View getView(final int position, View convertView, ViewGroup parent) {
+
             // If we weren't given a view, inflate one
             if (convertView == null) {
                 convertView = getActivity().getLayoutInflater()
                         .inflate(R.layout.listfragment_main, null);
             }
+
             String c = getItem(position);
-            ImageButton imageButton = (ImageButton) convertView.findViewById(R.id.row_icon);
+            ImageButton imageButton;
+            imageButton = (ImageButton) convertView.findViewById(R.id.row_icon);
+            //If the meme is in the favorites list set the default imageButton to be favorited
+            if(favorites.contains(c)) {
+                imageButton.setBackgroundResource(R.drawable.favorite_icon);
+                imageButton.setSelected(true);
+            }
             imageButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    //Set up a Toast message when an element is favorited
+                    Context context = getActivity().getApplicationContext();
+                    CharSequence favToastText = "Favorited this meme";
+                    CharSequence unfavToastText = "Unfavorited this meme";
+                    int duration = Toast.LENGTH_SHORT;
                     v.setSelected(!v.isSelected());
-                if (v.isSelected()) {
-                    v.setBackgroundResource(R.drawable.favorite_icon);
-                } else {
-                    v.setBackgroundResource(R.drawable.unfavorite_icon);
-                }
+                    if (v.isSelected()) {
+                        v.setBackgroundResource(R.drawable.favorite_icon);
+                        favorites.add(memeStrings.get(position));
+                        Toast toast = Toast.makeText(context, favToastText, duration);
+                        toast.show();
+                    } else {
+                        v.setBackgroundResource(R.drawable.unfavorite_icon);
+                        favorites.remove(memeStrings.get(position));
+                        Toast toast = Toast.makeText(context, unfavToastText, duration);
+                        toast.show();
+                    }
 
-                }});
+                }
+            });
 
             TextView titleTextView =
                     (TextView)convertView.findViewById(R.id.row_title);
