@@ -13,16 +13,14 @@
         android:text="@string/favorite_memes"
         android:layout_centerInParent="true"
         android:onClick="switchToFavoritesList"
-        android:layout_margin="5dp"
-        android:background="@drawable/button_selector" />
+        android:layout_margin="5dp"/>
 
     <Button
         android:id="@+id/allMemes"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="All Memes"
+        android:text="@string/all_memes"
         android:layout_margin="5dp"
         android:layout_below="@+id/favorite"
-        android:onClick="switchToMemeList"
-        android:background="@drawable/button_selector"/>
+        android:onClick="switchToMemeList"/>
 </RelativeLayout>

@@ -10,10 +10,12 @@
         android:id="@+id/row_icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-       android:background="@drawable/unfavorite_icon"
+        android:background="@drawable/unfavorite_icon"
+        android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:padding="4dp"
-        android:focusable="true"/>
+        android:focusable="true"
+        android:contentDescription="@string/meme_favorite_button"/>
 
     <TextView
         android:id="@+id/row_title"

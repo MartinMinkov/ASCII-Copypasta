@@ -3,7 +3,7 @@
     <string name="search_category">Categories</string>
     <string name="favorite_memes">Favorite memes</string>
     <string name="all_memes">All Memes</string>
-    <string name="memes_title">Meme Title</string>
+    <string name="meme_favorite_button">Favorite or unfavorite</string>
     <string name="twitch_memes">Twitch Memes</string>
     <string name="summary_twitch_memes">Displays only memes found on twitch</string>
     <string name="reddit_memes">Reddit Memes</string>

@@ -2,13 +2,14 @@ package copy_pasta.admin.asciicopypasta;
 
 import android.app.FragmentManager;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 
 /**
  * Created by Scott on 25/08/15.
+ * An activity to host the favorite fragment.
  */
-public class FavoritesActivity extends ActionBarActivity {
-    private FragmentManager fragManager = getFragmentManager();
+public class FavoritesActivity extends AppCompatActivity {
+    private final FragmentManager fragManager = getFragmentManager();
     @Override
     public void onCreate(Bundle savedInstanceBundle) {
         super.onCreate(savedInstanceBundle);

@@ -1,14 +1,15 @@
 package copy_pasta.admin.asciicopypasta;
 
-import android.app.FragmentManager;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
-
-public class MainActivity extends ActionBarActivity {
-    private FragmentManager fragManager = getFragmentManager();
+/**
+ * Application starting activity which holds the two buttons to go to either the favorites or all
+ * memes fragments.
+ */
+public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

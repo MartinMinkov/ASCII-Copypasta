@@ -14,15 +14,16 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 
 /**
  * Created by Scott on 25/08/15.
+ * A ListFragment which holds all of the favorited memes that the user selects. The favorited memes
+ * can also be copied to the clipboard like normal.
  */
 public class FavoriteMemeListFragment extends ListFragment {
     private static final String TAG = "MemeListFragment On Click";
-    ClipboardManager clipBoard;
-    View V;
+    private ClipboardManager clipBoard;
+    private View V;
     private ArrayList<String> favorites = new ArrayList<>();
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

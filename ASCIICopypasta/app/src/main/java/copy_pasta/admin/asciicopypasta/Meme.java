@@ -1,16 +1,15 @@
 package copy_pasta.admin.asciicopypasta;
 
 /**
- * Created by root on 24/08/15.
+ * Created by Scott on 24/08/15.
+ * A class for the meme, which holds the category the meme belongs to, and what the meme text is.
  */
-public class Meme {
-    private String meme;
-    private String category;
-    private Boolean favorited;
-    public Meme(String memeText, String cat, Boolean fav) {
+class Meme {
+    private final String meme;
+    private final String category;
+    public Meme(String memeText, String cat) {
         meme = memeText;
         category = cat;
-        favorited = fav;
     }
 
     public String getMeme() {
@@ -18,13 +17,5 @@ public class Meme {
     }
     public String getCategory() {
         return category;
-    }
-
-    public Boolean getFavorited() {
-        return favorited;
-    }
-    
-    public void updateFavorited(Boolean fav) {
-        favorited = fav;
     }
 }

@@ -4,45 +4,38 @@ import android.app.ListFragment;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
-import java.util.PriorityQueue;
 
 /**
  * Created by Martin on 13/08/15.
+ * A fragment which displays all of the memes based on which category the user selected. The class
+ * also contains the listFragments custom array adapter class.
  */
 public class MemeListFragment extends ListFragment{
-    private SharedPreferences sharedPref;
     private SharedPreferences.Editor editor;
     private HashSet<String> favorites = new HashSet<>();
-    private static ArrayList<Meme> memeList = new ArrayList<>();
-    private ArrayList<String> memeStrings = new ArrayList<>();
+    private final static ArrayList<Meme> memeList = new ArrayList<>();
+    private final ArrayList<String> memeStrings = new ArrayList<>();
     private static final String TAG = "MemeListFragment On Click";
-    private String sort;
-    ClipboardManager clipBoard;
-    View V;
+    private ClipboardManager clipBoard;
+    private View V;
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
             setHasOptionsMenu(true);
+            SharedPreferences sharedPref;
              clipBoard = (ClipboardManager) getActivity().
                     getSystemService(getActivity().getApplicationContext().CLIPBOARD_SERVICE);
             sharedPref = getActivity().getSharedPreferences(getString(R.string.favorite_memes),
@@ -53,13 +46,14 @@ public class MemeListFragment extends ListFragment{
                     favorites = new HashSet<>(sharedPref.getStringSet("FavoritesSet", null));
                 }
             }
+            editor.apply();
             MemeAdapter adapter = new MemeAdapter(memeStrings);
             setListAdapter(adapter);
             V = new View(getActivity());
             return super.onCreateView(inflater, container, savedInstanceState);
         }
         private void addMemes() {
-            memeList.add(new Meme("( ͡° ͜ʖ ͡°)┌∩┐", "twitch_memes", false));
+            memeList.add(new Meme("( ͡° ͜ʖ ͡°)┌∩┐", "twitch_memes"));
             memeList.add(new Meme("---------------------------\n" +
                     "\n" +
                     "┈┈┈┈╱▏┈┈┈┈┈╱▔▔▔▔╲\n" +
@@ -69,15 +63,15 @@ public class MemeListFragment extends ListFragment{
                     "┈┈╱╲╱╲▏┈┈┈┈┈┈▕▔╰━╯\n" +
                     "┈┈▔╲╲╱╱▔╱▔▔╲╲╲╲\n" +
                     "┈┈┈┈╲╱╲╱┈┈┈┈╲╲▂╲▂\n" +
-                    "┈┈┈┈┈┈┈┈┈┈┈┈┈╲╱╲╱", "reddit_memes", false));
-            memeList.add(new Meme("(ಠ_ಠ)┌∩┐", "twitch_memes", false));
-            memeList.add(new Meme("Table Flip (╯°□°）╯︵ ┻━┻", "twitch_memes", false));
-            memeList.add(new Meme("(º‿º✿) PEACEFUL PROTEST (º‿º✿)", "twitch_memes", false));
-            memeList.add(new Meme("(ಠ_ಠ)", "twitch_memes", false));
-            memeList.add(new Meme("( ͡° ͜ʖ ͡°)", "twitch_memes", false));
+                    "┈┈┈┈┈┈┈┈┈┈┈┈┈╲╱╲╱", "reddit_memes"));
+            memeList.add(new Meme("(ಠ_ಠ)┌∩┐", "twitch_memes"));
+            memeList.add(new Meme("Table Flip (╯°□°）╯︵ ┻━┻", "twitch_memes"));
+            memeList.add(new Meme("(º‿º✿) PEACEFUL PROTEST (º‿º✿)", "twitch_memes"));
+            memeList.add(new Meme("(ಠ_ಠ)", "twitch_memes"));
+            memeList.add(new Meme("( ͡° ͜ʖ ͡°)", "twitch_memes"));
             memeList.add(new Meme("ヽ(ຈل͜ຈ)ﾉ ( ºل͟º ) ୧༼ ͡◉ل͜ ͡◉༽୨ (ง ͠° ل͜ °)ง ヽ(ຈل͜ຈ)ﾉ\n" +
                     "(ง ͠° ل͜ °)ง \n Sorry, I dropped my bag of Dongers. \n ヽ(ຈل͜ຈ)ﾉ ( ºل͟º )\n" +
-                    "ヽ(ຈل͜ຈ)ﾉ ( ºل͟º ) ୧༼ ͡◉ل͜ ͡◉༽୨ (ง ͠° ل͜ °)ง", "twitch_memes", false));
+                    "ヽ(ຈل͜ຈ)ﾉ ( ºل͟º ) ୧༼ ͡◉ل͜ ͡◉༽୨ (ง ͠° ل͜ °)ง", "twitch_memes"));
             memeList.add(new Meme("░░░░░░░░░░░░ \n" +
                     "░░░░░░░░░░░░▄▀▀▀▀▄\n" +
                     "░░░░░░░░░░▄▀░░▄░▄░█\n" +
@@ -88,11 +82,11 @@ public class MemeListFragment extends ListFragment{
                     "░░░▄▀░░░░░░█░░░░▄▀\n" +
                     "░░░▀▄▀▄▄▀░░█▀░▄▀\n" +
                     "░░░░░░░░█▀▀█▀▀\n" +
-                    "░░░░░░░░▀▀░▀▀", "reddit_memes", false));
+                    "░░░░░░░░▀▀░▀▀", "reddit_memes"));
             memeList.add(new Meme("◑ ◑\n" +
                     "╔═╗\n" +
                     "║▓▒░░░░░░░░░\n" +
-                    "╚═╝", "reddit_memes", false));
+                    "╚═╝", "reddit_memes"));
             memeList.add(new Meme("I sexually Identify as an Attack Helicopter. \n" +
                     "Ever since I was a boy I dreamed of soaring over the oilfields dropping \n" +
                     "hot sticky loads on disgusting foreigners. People say to me that a person \n" +
@@ -101,8 +95,8 @@ public class MemeListFragment extends ListFragment{
                     "and AMG-114 Hellfire missiles on my body. From now on I want you guys to call \n" +
                     "me “Apache” and respect my right to kill from above and kill needlessly. \n" +
                     "If you can’t accept me you’re a heliphobe and need to check your vehicle privilege.\n" +
-                    " Thank you for being so understanding.\n", "twitch_memes", false));
-            memeList.add(new Meme("(ಠ_ಠ)┌∩┐", "twitch_memes", false));
+                    " Thank you for being so understanding.\n", "twitch_memes"));
+            memeList.add(new Meme("(ಠ_ಠ)┌∩┐", "twitch_memes"));
         }
 
     @Override
@@ -118,16 +112,16 @@ public class MemeListFragment extends ListFragment{
         public void onResume() {
             super.onResume();
             int categoriesFalseCounter = 0;
-            Map<String, ?> categories = getSharedPreference();
+            Map<String, ?> categoriesPreferences = getSharedPreference();
             addMemes();
-            for(String s: categories.keySet()) {
-                if((Boolean) categories.get(s)) {
+            for(String s: categoriesPreferences.keySet()) {
+                if((Boolean) categoriesPreferences.get(s)) {
                     setList(s);
                 } else {
                     categoriesFalseCounter++;
                 }
             }
-            if(categoriesFalseCounter == categories.size()) {
+            if(categoriesFalseCounter == categoriesPreferences.size()) {
                 setList("none");
             }
         }

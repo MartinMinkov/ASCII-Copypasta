@@ -4,9 +4,8 @@ import android.app.FragmentManager;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.CheckBoxPreference;
 import android.preference.PreferenceFragment;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -15,9 +14,11 @@ import android.view.View;
 
 /**
  * Created by Scott on 20/08/15.
+ * An activity that hosts both the memeListFragment as well as the preference screen fragment. Handles
+ * passing the information between the two fragments.
  */
-public class MemeListActivity extends ActionBarActivity {
-    private  FragmentManager fragManager = getFragmentManager();
+public class MemeListActivity extends AppCompatActivity {
+    private final FragmentManager fragManager = getFragmentManager();
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,7 +46,7 @@ public class MemeListActivity extends ActionBarActivity {
         }
     }
     /*Setting the fragment for the categories menu */
-    public void categoryMenu() {
+    private void categoryMenu() {
         SettingsFragment settingsFragment = new SettingsFragment();
         fragManager.beginTransaction().addToBackStack(null).setCustomAnimations(R.animator.slide_in_top,
                 R.animator.slide_out_bottom,
@@ -92,10 +93,8 @@ public class MemeListActivity extends ActionBarActivity {
             SharedPreferences sharedPref = getActivity().getSharedPreferences
                 (getString(R.string.categories_settings), Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPref.edit();
-            editor.remove("button");
-            editor.apply();
             editor.putBoolean(key, sharedPreferences.getBoolean(key, false));
-            editor.commit();
+            editor.apply();
         }
     }
 }
