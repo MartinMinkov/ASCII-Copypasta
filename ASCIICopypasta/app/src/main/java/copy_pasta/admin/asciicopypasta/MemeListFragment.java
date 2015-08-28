@@ -47,7 +47,6 @@ public class MemeListFragment extends ListFragment{
                     Context.MODE_PRIVATE);
             editor = sharedPref.edit();
             if(sharedPref != null) {
-                favorites = new HashSet<>(sharedPref.getStringSet("FavoritesSet", null));
                 if (sharedPref.getStringSet("FavoritesSet", null) != null) {
                     favorites = new HashSet<>(sharedPref.getStringSet("FavoritesSet", null));
                 }
@@ -92,7 +91,16 @@ public class MemeListFragment extends ListFragment{
                     "╔═╗\n" +
                     "║▓▒░░░░░░░░░\n" +
                     "╚═╝", "reddit_memes", false));
-            memeList.add(new Meme("Yᴏᴜ ɢᴜʏs ᴀʀᴇ ʀᴜɪɴɪɴɢ ᴍʏ ᴛᴡɪᴛᴄʜ ᴄʜᴀᴛ ᴇxᴘᴇʀɪᴇɴᴄᴇ. I ᴄᴏᴍᴇ ᴛᴏ ᴛʜᴇ ᴛᴡɪᴛᴄʜ ᴄʜᴀᴛ ғᴏʀ ᴍᴀᴛᴜʀᴇ ᴄᴏɴᴠᴇʀsᴀᴛɪᴏɴ ᴀʙᴏᴜᴛ ᴛʜᴇ ɢᴀᴍᴇᴘʟᴀʏ, ᴏɴʟʏ ᴛᴏ ʙᴇ ᴀᴡᴀʀᴅᴇᴅ ᴡɪᴛʜ ᴋᴀᴘᴘᴀ ғᴀᴄᴇs ᴀɴᴅ ғʀᴀɴᴋᴇʀᴢs. Pᴇᴏᴘʟᴇ ᴡʜᴏ sᴘᴀᴍ sᴀɪᴅ ғᴀᴄᴇs ɴᴇᴇᴅ ᴍᴇᴅɪᴄᴀʟ ᴀᴛᴛᴇɴᴛɪᴏɴ ᴜᴛᴍᴏsᴛ. Tʜᴇ ᴛᴡɪᴛᴄʜ ᴄʜᴀᴛ ɪs sᴇʀɪᴏᴜs ʙᴜsɪɴᴇss, ᴀɴᴅ ᴛʜᴇ ᴍᴏᴅs sʜᴏᴜʟᴅ ʀᴇᴀʟʟʏ ʀᴀɪsᴇ ᴛʜᴇɪʀ ᴅᴏɴɢᴇʀs\n", "twitch_memes", false));
+            memeList.add(new Meme("I sexually Identify as an Attack Helicopter. \n" +
+                    "Ever since I was a boy I dreamed of soaring over the oilfields dropping \n" +
+                    "hot sticky loads on disgusting foreigners. People say to me that a person \n" +
+                    "being a helicopter is Impossible and I’m fucking retarded but I don’t care, \n" +
+                    "I’m beautiful. I’m having a plastic surgeon install rotary blades, 30 mm cannons \n" +
+                    "and AMG-114 Hellfire missiles on my body. From now on I want you guys to call \n" +
+                    "me “Apache” and respect my right to kill from above and kill needlessly. \n" +
+                    "If you can’t accept me you’re a heliphobe and need to check your vehicle privilege.\n" +
+                    " Thank you for being so understanding.\n", "twitch_memes", false));
+            memeList.add(new Meme("(ಠ_ಠ)┌∩┐", "twitch_memes", false));
         }
 
     @Override

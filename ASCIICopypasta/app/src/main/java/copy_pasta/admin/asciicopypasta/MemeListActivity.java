@@ -89,9 +89,8 @@ public class MemeListActivity extends ActionBarActivity {
         }
         @Override
         public void onSharedPreferenceChanged (SharedPreferences sharedPreferences, String key) {
-            //TODO set buttons to only have 1 active at a time
             SharedPreferences sharedPref = getActivity().getSharedPreferences
-                    (getString(R.string.categories_settings), Context.MODE_PRIVATE);
+                (getString(R.string.categories_settings), Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPref.edit();
             editor.putBoolean(key, sharedPreferences.getBoolean(key, false));
             editor.putString("button", key);
