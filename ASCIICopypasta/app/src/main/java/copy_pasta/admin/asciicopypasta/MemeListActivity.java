@@ -4,6 +4,7 @@ import android.app.FragmentManager;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.CheckBoxPreference;
 import android.preference.PreferenceFragment;
 import android.support.v7.app.ActionBarActivity;
 import android.view.ContextMenu;
@@ -30,7 +31,7 @@ public class MemeListActivity extends ActionBarActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
-        return super.onCreateOptionsMenu(menu);
+        return false;
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -89,10 +90,11 @@ public class MemeListActivity extends ActionBarActivity {
         @Override
         public void onSharedPreferenceChanged (SharedPreferences sharedPreferences, String key) {
             SharedPreferences sharedPref = getActivity().getSharedPreferences
-                    (getString(R.string.categories_settings), Context.MODE_PRIVATE);
+                (getString(R.string.categories_settings), Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPref.edit();
+            editor.remove("button");
+            editor.apply();
             editor.putBoolean(key, sharedPreferences.getBoolean(key, false));
-            editor.putString("button", key);
             editor.commit();
         }
     }
