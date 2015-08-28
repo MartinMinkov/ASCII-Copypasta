@@ -21,7 +21,10 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.PriorityQueue;
 
 /**
@@ -35,7 +38,6 @@ public class MemeListFragment extends ListFragment{
     private ArrayList<String> memeStrings = new ArrayList<>();
     private static final String TAG = "MemeListFragment On Click";
     private String sort;
-    private Boolean categories;
     ClipboardManager clipBoard;
     View V;
         @Override
@@ -115,9 +117,19 @@ public class MemeListFragment extends ListFragment{
     @Override
         public void onResume() {
             super.onResume();
-            categories = getSharedPreference();
+            int categoriesFalseCounter = 0;
+            Map<String, ?> categories = getSharedPreference();
             addMemes();
-            setList();
+            for(String s: categories.keySet()) {
+                if((Boolean) categories.get(s)) {
+                    setList(s);
+                } else {
+                    categoriesFalseCounter++;
+                }
+            }
+            if(categoriesFalseCounter == categories.size()) {
+                setList("none");
+            }
         }
     public void onListItemClick(ListView l, View v, int position, long id) {
         super.onListItemClick(l, v, position, id);
@@ -138,29 +150,26 @@ public class MemeListFragment extends ListFragment{
         toast.show();
     }
     /*Gets the shared preferences from MainAcitivity and stores them into values */
-    private boolean getSharedPreference() {
+    private Map<String, ?> getSharedPreference() {
         SharedPreferences sharedPref = getActivity().getSharedPreferences
                 (getString(R.string.categories_settings), Context.MODE_PRIVATE);
-        sort = sharedPref.getString("button", null);
-        return sharedPref.getBoolean(sort, false);
+        return sharedPref.getAll();
     }
     /*Sets the lists based on which button has been set to filter, or if no button is active it
      * defaults to adding all memes to the main list. */
-    private void setList() {
-        //Check for if it is the first time opening the app or the button was set to false
-        if(sort == null || categories == false) {
-            initMemeString("none");
-        } else {
+    private void setList(String category) {
             //Which memes to add to the main list.
-            switch (sort) {
+            switch (category) {
                 case "twitch_memes":
                     initMemeString("twitch_memes");
                     break;
                 case "reddit_memes":
                     initMemeString("reddit_memes");
                     break;
+                case "none":
+                    initMemeString("none");
+                    break;
             }
-        }
     }
     /*Initializes the memeString arraylist to hold the proper memes. This is dependant on which
     category the user is searching for, by default ("none" category) it adds all memes to the list*/

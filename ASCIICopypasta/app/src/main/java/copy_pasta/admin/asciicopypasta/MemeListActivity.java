@@ -92,8 +92,9 @@ public class MemeListActivity extends ActionBarActivity {
             SharedPreferences sharedPref = getActivity().getSharedPreferences
                 (getString(R.string.categories_settings), Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPref.edit();
+            editor.remove("button");
+            editor.apply();
             editor.putBoolean(key, sharedPreferences.getBoolean(key, false));
-            editor.putString("button", key);
             editor.commit();
         }
     }
