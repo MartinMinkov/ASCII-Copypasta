@@ -97,13 +97,8 @@ public class MemeListFragment extends ListFragment{
         public void onPause() {
             super.onPause();
             memeStrings.clear();
-<<<<<<< HEAD
             memeList.clear();
             editor.putStringSet("FavoritesSet", favorites);
-=======
-        memeList.clear();
-        editor.putStringSet("FavoritesSet", favorites);
->>>>>>> ea76652f5af5cecd01ce840eb9bfba5be6dfa293
             editor.commit();
         }
 
@@ -210,11 +205,6 @@ public class MemeListFragment extends ListFragment{
                     if (v.isSelected()) {
                         v.setBackgroundResource(R.drawable.favorite_icon);
                         favorites.add(memeStrings.get(position));
-<<<<<<< HEAD
-                    } else {
-                        v.setBackgroundResource(R.drawable.unfavorite_icon);
-                        favorites.remove(memeStrings.get(position));
-=======
                         Toast toast = Toast.makeText(context, favToastText, duration);
                         toast.show();
                     } else {
@@ -222,7 +212,6 @@ public class MemeListFragment extends ListFragment{
                         favorites.remove(memeStrings.get(position));
                         Toast toast = Toast.makeText(context, unfavToastText, duration);
                         toast.show();
->>>>>>> ea76652f5af5cecd01ce840eb9bfba5be6dfa293
                     }
 
                 }
