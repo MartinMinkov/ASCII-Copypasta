@@ -6,5 +6,7 @@
     <string name="memes_title">Meme Title</string>
     <string name="twitch_memes">Twitch Memes</string>
     <string name="summary_twitch_memes">Displays only memes found on twitch</string>
+    <string name="reddit_memes">Reddit Memes</string>
+    <string name="summary_reddit_memes">Displays only memes found on reddit</string>
     <string name="categories_settings">copy_pasta.admin.asciicopypasta.CATEGORIES_FILE</string>
 </resources>

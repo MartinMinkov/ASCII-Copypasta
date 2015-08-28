@@ -21,7 +21,10 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.PriorityQueue;
 
 /**
@@ -35,18 +38,17 @@ public class MemeListFragment extends ListFragment{
     private ArrayList<String> memeStrings = new ArrayList<>();
     private static final String TAG = "MemeListFragment On Click";
     private String sort;
-    private Boolean categories;
     ClipboardManager clipBoard;
     View V;
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+            setHasOptionsMenu(true);
              clipBoard = (ClipboardManager) getActivity().
                     getSystemService(getActivity().getApplicationContext().CLIPBOARD_SERVICE);
             sharedPref = getActivity().getSharedPreferences(getString(R.string.favorite_memes),
                     Context.MODE_PRIVATE);
             editor = sharedPref.edit();
             if(sharedPref != null) {
-                favorites = new HashSet<>(sharedPref.getStringSet("FavoritesSet", null));
                 if (sharedPref.getStringSet("FavoritesSet", null) != null) {
                     favorites = new HashSet<>(sharedPref.getStringSet("FavoritesSet", null));
                 }
@@ -91,6 +93,16 @@ public class MemeListFragment extends ListFragment{
                     "╔═╗\n" +
                     "║▓▒░░░░░░░░░\n" +
                     "╚═╝", "reddit_memes", false));
+            memeList.add(new Meme("I sexually Identify as an Attack Helicopter. \n" +
+                    "Ever since I was a boy I dreamed of soaring over the oilfields dropping \n" +
+                    "hot sticky loads on disgusting foreigners. People say to me that a person \n" +
+                    "being a helicopter is Impossible and I’m fucking retarded but I don’t care, \n" +
+                    "I’m beautiful. I’m having a plastic surgeon install rotary blades, 30 mm cannons \n" +
+                    "and AMG-114 Hellfire missiles on my body. From now on I want you guys to call \n" +
+                    "me “Apache” and respect my right to kill from above and kill needlessly. \n" +
+                    "If you can’t accept me you’re a heliphobe and need to check your vehicle privilege.\n" +
+                    " Thank you for being so understanding.\n", "twitch_memes", false));
+            memeList.add(new Meme("(ಠ_ಠ)┌∩┐", "twitch_memes", false));
         }
 
     @Override
@@ -105,9 +117,19 @@ public class MemeListFragment extends ListFragment{
     @Override
         public void onResume() {
             super.onResume();
-            categories = getSharedPreference();
+            int categoriesFalseCounter = 0;
+            Map<String, ?> categories = getSharedPreference();
             addMemes();
-            setList();
+            for(String s: categories.keySet()) {
+                if((Boolean) categories.get(s)) {
+                    setList(s);
+                } else {
+                    categoriesFalseCounter++;
+                }
+            }
+            if(categoriesFalseCounter == categories.size()) {
+                setList("none");
+            }
         }
     public void onListItemClick(ListView l, View v, int position, long id) {
         super.onListItemClick(l, v, position, id);
@@ -128,29 +150,26 @@ public class MemeListFragment extends ListFragment{
         toast.show();
     }
     /*Gets the shared preferences from MainAcitivity and stores them into values */
-    private boolean getSharedPreference() {
+    private Map<String, ?> getSharedPreference() {
         SharedPreferences sharedPref = getActivity().getSharedPreferences
                 (getString(R.string.categories_settings), Context.MODE_PRIVATE);
-        sort = sharedPref.getString("button", null);
-        return sharedPref.getBoolean(sort, false);
+        return sharedPref.getAll();
     }
     /*Sets the lists based on which button has been set to filter, or if no button is active it
      * defaults to adding all memes to the main list. */
-    private void setList() {
-        //Check for if it is the first time opening the app or the button was set to false
-        if(sort == null || categories == false) {
-            initMemeString("none");
-        } else {
+    private void setList(String category) {
             //Which memes to add to the main list.
-            switch (sort) {
+            switch (category) {
                 case "twitch_memes":
                     initMemeString("twitch_memes");
                     break;
                 case "reddit_memes":
                     initMemeString("reddit_memes");
                     break;
+                case "none":
+                    initMemeString("none");
+                    break;
             }
-        }
     }
     /*Initializes the memeString arraylist to hold the proper memes. This is dependant on which
     category the user is searching for, by default ("none" category) it adds all memes to the list*/
