@@ -20,6 +20,7 @@
     <TextView
         android:id="@+id/row_title"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_marginRight="64dp"/>
 
 </RelativeLayout>

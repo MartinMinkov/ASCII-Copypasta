@@ -53,6 +53,7 @@ public class MemeListFragment extends ListFragment{
             return super.onCreateView(inflater, container, savedInstanceState);
         }
         private void addMemes() {
+            memeList.add(new Meme("⇎_⇎", "twitch memes"));
             memeList.add(new Meme("( ͡° ͜ʖ ͡°)┌∩┐", "twitch_memes"));
             memeList.add(new Meme("---------------------------\n" +
                     "\n" +
