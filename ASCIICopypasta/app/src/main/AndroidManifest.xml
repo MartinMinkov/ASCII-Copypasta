@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="copy_pasta.admin.asciicopypasta" >
-
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <application
         android:allowBackup="true"
         android:icon="@mipmap/android_ascii"
@@ -20,5 +20,4 @@
         </activity>
         <activity android:name=".FavoritesActivity"/>
     </application>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"></uses-permission>
 </manifest>

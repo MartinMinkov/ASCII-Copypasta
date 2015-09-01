@@ -7,7 +7,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.AssetManager;
 import android.os.Bundle;
-import android.os.Environment;
+import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,11 +16,7 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
@@ -41,7 +37,7 @@ public class MemeListFragment extends ListFragment{
     private ClipboardManager clipBoard;
     private View V;
         @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
             setHasOptionsMenu(true);
             SharedPreferences sharedPref;
              clipBoard = (ClipboardManager) getActivity().
@@ -49,10 +45,8 @@ public class MemeListFragment extends ListFragment{
             sharedPref = getActivity().getSharedPreferences(getString(R.string.favorite_memes),
                     Context.MODE_PRIVATE);
             editor = sharedPref.edit();
-            if(sharedPref != null) {
-                if (sharedPref.getStringSet("FavoritesSet", null) != null) {
-                    favorites = new HashSet<>(sharedPref.getStringSet("FavoritesSet", null));
-                }
+            if (sharedPref.getStringSet("FavoritesSet", null) != null) {
+                favorites = new HashSet<>(sharedPref.getStringSet("FavoritesSet", new HashSet<String>()));
             }
             editor.apply();
             MemeAdapter adapter = new MemeAdapter(memeStrings);
@@ -72,8 +66,6 @@ public class MemeListFragment extends ListFragment{
                         memeList.add(new Meme(meme, category));
                         bufferedReader.readLine();
                 }
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -87,7 +79,6 @@ public class MemeListFragment extends ListFragment{
             editor.putStringSet("FavoritesSet", favorites);
             editor.commit();
         }
-
     @Override
         public void onResume() {
             super.onResume();
@@ -183,10 +174,15 @@ public class MemeListFragment extends ListFragment{
                 convertView = getActivity().getLayoutInflater()
                         .inflate(R.layout.listfragment_main, null);
             }
-
+            //TODO Without this application crashed on scrolling + back button. This seems to have fixed it but it needs more testing
+            if(memeStrings.size() < position) {
+                return convertView;
+            }
             String c = getItem(position);
             ImageButton imageButton;
             imageButton = (ImageButton) convertView.findViewById(R.id.row_icon);
+            //Resets the view set for when the screen is scrolled
+            imageButton.setBackgroundResource(R.drawable.unfavorite_icon);
             //If the meme is in the favorites list set the default imageButton to be favorited
             if(favorites.contains(c)) {
                 imageButton.setBackgroundResource(R.drawable.favorite_icon);
@@ -220,6 +216,10 @@ public class MemeListFragment extends ListFragment{
                     (TextView)convertView.findViewById(R.id.row_title);
             titleTextView.setText(c);
             return convertView;
+        }
+        @Override
+        public int getCount() {
+            return memeStrings.size();
         }
     }
 }
