@@ -12,4 +12,16 @@
         android:summary="@string/summary_reddit_memes"
         android:defaultValue="false"
         />
+    <CheckBoxPreference
+        android:key="misc_memes"
+        android:title="@string/misc_memes"
+        android:summary="@string/summary_misc_memes"
+        android:defaultValue="false"
+        />
+    <CheckBoxPreference
+        android:key="4chan_memes"
+        android:title="@string/four_chan_memes"
+        android:summary="@string/summary_four_chan_memes"
+        android:defaultValue="false"
+        />
 </PreferenceScreen>

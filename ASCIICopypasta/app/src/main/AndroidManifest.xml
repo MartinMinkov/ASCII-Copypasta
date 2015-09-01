@@ -20,5 +20,5 @@
         </activity>
         <activity android:name=".FavoritesActivity"/>
     </application>
-
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"></uses-permission>
 </manifest>

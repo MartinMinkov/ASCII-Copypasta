@@ -8,5 +8,9 @@
     <string name="summary_twitch_memes">Displays only memes found on twitch</string>
     <string name="reddit_memes">Reddit Memes</string>
     <string name="summary_reddit_memes">Displays only memes found on reddit</string>
+    <string name="misc_memes">Misc Memes</string>
+    <string name="summary_misc_memes">Displays memes that don\'t have a specific category</string>
+    <string name="four_chan_memes">4chan Memes</string>
+    <string name="summary_four_chan_memes">Displays only memes found on 4chan</string>
     <string name="categories_settings">copy_pasta.admin.asciicopypasta.CATEGORIES_FILE</string>
 </resources>

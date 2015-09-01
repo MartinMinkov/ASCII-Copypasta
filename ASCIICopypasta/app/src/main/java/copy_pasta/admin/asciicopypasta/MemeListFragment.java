@@ -5,7 +5,9 @@ import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.res.AssetManager;
 import android.os.Bundle;
+import android.os.Environment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +17,12 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Map;
@@ -53,51 +61,22 @@ public class MemeListFragment extends ListFragment{
             return super.onCreateView(inflater, container, savedInstanceState);
         }
         private void addMemes() {
-            memeList.add(new Meme("⇎_⇎", "twitch memes"));
-            memeList.add(new Meme("( ͡° ͜ʖ ͡°)┌∩┐", "twitch_memes"));
-            memeList.add(new Meme("---------------------------\n" +
-                    "\n" +
-                    "┈┈┈┈╱▏┈┈┈┈┈╱▔▔▔▔╲\n" +
-                    "┈┈┈┈▏▏┈┈┈┈┈▏╲▕▋▕▋▏\n" +
-                    "┈┈┈┈╲╲┈┈┈┈┈▏┈▏┈▔▔▔▆\n" +
-                    "┈┈┈┈┈╲▔▔▔▔▔╲╱┈╰┳┳┳╯\n" +
-                    "┈┈╱╲╱╲▏┈┈┈┈┈┈▕▔╰━╯\n" +
-                    "┈┈▔╲╲╱╱▔╱▔▔╲╲╲╲\n" +
-                    "┈┈┈┈╲╱╲╱┈┈┈┈╲╲▂╲▂\n" +
-                    "┈┈┈┈┈┈┈┈┈┈┈┈┈╲╱╲╱", "reddit_memes"));
-            memeList.add(new Meme("(ಠ_ಠ)┌∩┐", "twitch_memes"));
-            memeList.add(new Meme("Table Flip (╯°□°）╯︵ ┻━┻", "twitch_memes"));
-            memeList.add(new Meme("(º‿º✿) PEACEFUL PROTEST (º‿º✿)", "twitch_memes"));
-            memeList.add(new Meme("(ಠ_ಠ)", "twitch_memes"));
-            memeList.add(new Meme("( ͡° ͜ʖ ͡°)", "twitch_memes"));
-            memeList.add(new Meme("ヽ(ຈل͜ຈ)ﾉ ( ºل͟º ) ୧༼ ͡◉ل͜ ͡◉༽୨ (ง ͠° ل͜ °)ง ヽ(ຈل͜ຈ)ﾉ\n" +
-                    "(ง ͠° ل͜ °)ง \n Sorry, I dropped my bag of Dongers. \n ヽ(ຈل͜ຈ)ﾉ ( ºل͟º )\n" +
-                    "ヽ(ຈل͜ຈ)ﾉ ( ºل͟º ) ୧༼ ͡◉ل͜ ͡◉༽୨ (ง ͠° ل͜ °)ง", "twitch_memes"));
-            memeList.add(new Meme("░░░░░░░░░░░░ \n" +
-                    "░░░░░░░░░░░░▄▀▀▀▀▄\n" +
-                    "░░░░░░░░░░▄▀░░▄░▄░█\n" +
-                    "░▄▄░░░░░▄▀░░░░▄▄▄▄█\n" +
-                    "█░░▀▄░▄▀░░░░░░░░░░█\n" +
-                    "░▀▄░░▀▄░░░░█░░░░░░█\n" +
-                    "░░░▀▄░░▀░░░█░░░░░░█\n" +
-                    "░░░▄▀░░░░░░█░░░░▄▀\n" +
-                    "░░░▀▄▀▄▄▀░░█▀░▄▀\n" +
-                    "░░░░░░░░█▀▀█▀▀\n" +
-                    "░░░░░░░░▀▀░▀▀", "reddit_memes"));
-            memeList.add(new Meme("◑ ◑\n" +
-                    "╔═╗\n" +
-                    "║▓▒░░░░░░░░░\n" +
-                    "╚═╝", "reddit_memes"));
-            memeList.add(new Meme("I sexually Identify as an Attack Helicopter. \n" +
-                    "Ever since I was a boy I dreamed of soaring over the oilfields dropping \n" +
-                    "hot sticky loads on disgusting foreigners. People say to me that a person \n" +
-                    "being a helicopter is Impossible and I’m fucking retarded but I don’t care, \n" +
-                    "I’m beautiful. I’m having a plastic surgeon install rotary blades, 30 mm cannons \n" +
-                    "and AMG-114 Hellfire missiles on my body. From now on I want you guys to call \n" +
-                    "me “Apache” and respect my right to kill from above and kill needlessly. \n" +
-                    "If you can’t accept me you’re a heliphobe and need to check your vehicle privilege.\n" +
-                    " Thank you for being so understanding.\n", "twitch_memes"));
-            memeList.add(new Meme("(ಠ_ಠ)┌∩┐", "twitch_memes"));
+            String category;
+            String meme;
+            AssetManager assetManager = getActivity().getAssets();
+            try {
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader
+                        (assetManager.open("memes.txt"), "UTF-16"));
+                while((category = bufferedReader.readLine()) != null) {
+                        meme = bufferedReader.readLine();
+                        memeList.add(new Meme(meme, category));
+                        bufferedReader.readLine();
+                }
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
 
     @Override
@@ -160,6 +139,12 @@ public class MemeListFragment extends ListFragment{
                     break;
                 case "reddit_memes":
                     initMemeString("reddit_memes");
+                    break;
+                case "4chan_memes":
+                    initMemeString("4chan_memes");
+                    break;
+                case "misc_memes":
+                    initMemeString("misc_memes");
                     break;
                 case "none":
                     initMemeString("none");
