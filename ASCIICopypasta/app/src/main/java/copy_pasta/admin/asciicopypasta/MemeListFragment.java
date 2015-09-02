@@ -107,9 +107,6 @@ public class MemeListFragment extends ListFragment{
         //Set up the ClipBoard object to copy the meme to the clipboard.
         ClipData clip = ClipData.newPlainText(TAG, memeStrings.get(position));
         clipBoard.setPrimaryClip(clip);
-
-        V.setBackgroundResource(0);
-        v.setBackgroundResource(R.color.button_material_light);
         V = v;
 
         toast.show();
@@ -136,6 +133,12 @@ public class MemeListFragment extends ListFragment{
                     break;
                 case "misc_memes":
                     initMemeString("misc_memes");
+                    break;
+                case "dota_memes":
+                    initMemeString("dota_memes");
+                    break;
+                case "hearthstone_memes":
+                    initMemeString("hearthstone_memes");
                     break;
                 case "none":
                     initMemeString("none");

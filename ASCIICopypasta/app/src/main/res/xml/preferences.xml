@@ -24,4 +24,16 @@
         android:summary="@string/summary_four_chan_memes"
         android:defaultValue="false"
         />
+    <CheckBoxPreference
+        android:key="dota_memes"
+        android:title="@string/dota_memes"
+        android:summary="@string/summary_dota_memes"
+        android:defaultValue="false"
+        />
+    <CheckBoxPreference
+        android:key="hearthstone_memes"
+        android:title="@string/hearthstone_memes"
+        android:summary="@string/summary_hearthstone_memes"
+        android:defaultValue="false"
+        />
 </PreferenceScreen>
