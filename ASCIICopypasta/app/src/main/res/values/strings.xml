@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">ASCII Copypasta</string>
     <string name="search_category">Categories</string>
-    <string name="favorite_memes">Favorite memes</string>
+    <string name="favorite_memes">Favorite Memes</string>
     <string name="all_memes">All Memes</string>
     <string name="title_description">ASCII Copypasta Title</string>
     <string name="meme_favorite_button">Favorite or unfavorite</string>
@@ -18,4 +18,5 @@
     <string name="hearthstone_memes">Hearthstone Memes</string>
     <string name="summary_hearthstone_memes">Displays only memes related to hearthstone</string>
     <string name="categories_settings">copy_pasta.admin.asciicopypasta.CATEGORIES_FILE</string>
+    <string name="main_menu">Main Menu</string>
 </resources>
