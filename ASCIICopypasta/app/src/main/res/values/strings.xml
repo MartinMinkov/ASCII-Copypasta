@@ -6,17 +6,19 @@
     <string name="title_description">ASCII Copypasta Title</string>
     <string name="meme_favorite_button">Favorite or unfavorite</string>
     <string name="twitch_memes">Twitch Memes</string>
-    <string name="summary_twitch_memes">Displays only memes found on twitch</string>
+    <string name="summary_twitch_memes">Displays memes only found on twitch</string>
     <string name="reddit_memes">Reddit Memes</string>
-    <string name="summary_reddit_memes">Displays only memes found on reddit</string>
+    <string name="summary_reddit_memes">Displays memes only found on reddit</string>
     <string name="misc_memes">Misc Memes</string>
     <string name="summary_misc_memes">Displays memes that don\'t have a specific category</string>
     <string name="four_chan_memes">4chan Memes</string>
-    <string name="summary_four_chan_memes">Displays only memes found on 4chan</string>
+    <string name="summary_four_chan_memes">Displays memes only found on 4chan</string>
     <string name="dota_memes">Dota Memes</string>
-    <string name="summary_dota_memes">Displays only memes related to dota</string>
+    <string name="summary_dota_memes">Displays memes only related to dota</string>
     <string name="hearthstone_memes">Hearthstone Memes</string>
-    <string name="summary_hearthstone_memes">Displays only memes related to hearthstone</string>
+    <string name="summary_hearthstone_memes">Displays memes only related to hearthstone</string>
+    <string name="LoL_memes">League of Legends Memes</string>
+    <string name="summary_LoL_memes">Displays memes only related to LoL</string>
     <string name="categories_settings">copy_pasta.admin.asciicopypasta.CATEGORIES_FILE</string>
     <string name="main_menu">Main Menu</string>
 </resources>

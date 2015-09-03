@@ -36,4 +36,10 @@
         android:summary="@string/summary_hearthstone_memes"
         android:defaultValue="false"
         />
+    <CheckBoxPreference
+        android:key="LoL_memes"
+        android:title="@string/LoL_memes"
+        android:summary="@string/summary_LoL_memes"
+        android:defaultValue="false"
+        />
 </PreferenceScreen>
