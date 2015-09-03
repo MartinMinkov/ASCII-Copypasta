@@ -169,6 +169,7 @@ public class MemeListFragment extends ListFragment{
         public MemeAdapter(ArrayList<String> memes) {
             super(getActivity(), 0, memes);
         }
+
         @Override
         public View getView(final int position, View convertView, ViewGroup parent) {
 
@@ -177,8 +178,9 @@ public class MemeListFragment extends ListFragment{
                 convertView = getActivity().getLayoutInflater()
                         .inflate(R.layout.listfragment_main, null);
             }
-            //TODO Without this application crashed on scrolling + back button. This seems to have fixed it but it needs more testing
-            if(memeStrings.size() < position) {
+            //When the back button is pressed the onPause for clearing all arraylists is called, which
+            //sets the size of the array to be zero. This stops the app from crashing because of get Item.
+            if (memeStrings.size() < position) {
                 return convertView;
             }
             String c = getItem(position);
@@ -187,7 +189,7 @@ public class MemeListFragment extends ListFragment{
             //Resets the view set for when the screen is scrolled
             imageButton.setBackgroundResource(R.drawable.unfavorite_icon);
             //If the meme is in the favorites list set the default imageButton to be favorited
-            if(favorites.contains(c)) {
+            if (favorites.contains(c)) {
                 imageButton.setBackgroundResource(R.drawable.favorite_icon);
                 imageButton.setSelected(true);
             }
@@ -216,13 +218,9 @@ public class MemeListFragment extends ListFragment{
             });
 
             TextView titleTextView =
-                    (TextView)convertView.findViewById(R.id.row_title);
+                    (TextView) convertView.findViewById(R.id.row_title);
             titleTextView.setText(c);
             return convertView;
-        }
-        @Override
-        public int getCount() {
-            return memeStrings.size();
         }
     }
 }
