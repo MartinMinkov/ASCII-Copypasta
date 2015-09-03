@@ -140,6 +140,9 @@ public class MemeListFragment extends ListFragment{
                 case "hearthstone_memes":
                     initMemeString("hearthstone_memes");
                     break;
+                case "LoL_memes":
+                    initMemeString("LoL_memes");
+                    break;
                 case "none":
                     initMemeString("none");
                     break;
