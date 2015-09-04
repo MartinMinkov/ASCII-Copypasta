@@ -35,7 +35,6 @@ public class MemeListFragment extends ListFragment{
     private final ArrayList<String> memeStrings = new ArrayList<>();
     private static final String TAG = "MemeListFragment On Click";
     private ClipboardManager clipBoard;
-    private View V;
         @Override
         public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
             setHasOptionsMenu(true);
@@ -51,7 +50,6 @@ public class MemeListFragment extends ListFragment{
             editor.apply();
             MemeAdapter adapter = new MemeAdapter(memeStrings);
             setListAdapter(adapter);
-            V = new View(getActivity());
             return super.onCreateView(inflater, container, savedInstanceState);
         }
         private void addMemes() {
@@ -107,7 +105,6 @@ public class MemeListFragment extends ListFragment{
         //Set up the ClipBoard object to copy the meme to the clipboard.
         ClipData clip = ClipData.newPlainText(TAG, memeStrings.get(position));
         clipBoard.setPrimaryClip(clip);
-        V = v;
 
         toast.show();
     }
