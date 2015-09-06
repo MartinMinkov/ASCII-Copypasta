@@ -98,7 +98,7 @@ public class MemeListFragment extends ListFragment{
         super.onListItemClick(l, v, position, id);
         //Set up a Toast message when an element is highlighted
         Context context = getActivity().getApplicationContext();
-        CharSequence toastText = "Text has been copied to clipboard.";
+        CharSequence toastText = "Text has been copied to Clipboard.";
         int duration = Toast.LENGTH_SHORT;
         Toast toast = Toast.makeText(context, toastText, duration);
 
